@@ -29,7 +29,8 @@ test("worker lazy-loads open-weight model in local browser",()=>{
 });
 test("site includes local WASM engine and bundled worker",()=>{
  for(const asset of ["docs/assets/app.js","docs/assets/ai-worker.js","docs/assets/styles.css",
-   "docs/assets/ort/ort-wasm-simd-threaded.mjs","docs/assets/ort/ort-wasm-simd-threaded.wasm"])
+   "docs/assets/ort/ort-wasm-simd-threaded.mjs","docs/assets/ort/ort-wasm-simd-threaded.wasm",
+   "docs/assets/ort/ort-wasm-simd-threaded.jsep.mjs","docs/assets/ort/ort-wasm-simd-threaded.jsep.wasm"])
     assert(fs.statSync(path.join(root,asset)).size>0,asset+" missing/empty");
 });
 test("open site is canonical, no external payment SDK or key request",()=>{

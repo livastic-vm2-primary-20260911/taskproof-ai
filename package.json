@@ -6,7 +6,7 @@
   "description": "Local-first bounty due-diligence and evidence readiness planner with open-weight FLAN-T5",
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "build": "esbuild src/app.mjs --bundle --format=iife --minify --target=es2020 --outfile=docs/assets/app.js && esbuild src/ai-worker.mjs --bundle --format=esm --minify --target=es2022 --outfile=docs/assets/ai-worker.js --loader:.wasm=file && mkdir -p docs/assets/ort && cp node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.mjs node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.wasm docs/assets/ort/ && cp src/styles.css docs/assets/styles.css"
+    "build": "esbuild src/app.mjs --bundle --format=iife --minify --target=es2020 --outfile=docs/assets/app.js && esbuild src/ai-worker.mjs --bundle --format=esm --minify --target=es2022 --outfile=docs/assets/ai-worker.js --loader:.wasm=file && mkdir -p docs/assets/ort && cp node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.mjs node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.wasm node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.jsep.mjs node_modules/onnxruntime-web/dist/ort-wasm-simd-threaded.jsep.wasm docs/assets/ort/ && cp src/styles.css docs/assets/styles.css"
   },
   "dependencies": {
     "@huggingface/transformers": "^3.7.5"
