@@ -67,6 +67,8 @@ Built from scratch in October 2026 by the AI-assisted VM2 project team. The code
 
 **Important:** Merely publishing this repo does not enter a competition. Formal DEV challenge submission binds a human participant to official eligibility, publicity, liability, and tax terms. It requires the actual eligible account holder's review/acceptance; we do not claim an entry, sponsorship, or prize.
 
+For separately scoped, paid GitHub Actions workflow checks and Python CSV-to-JSON development, see [Workflow Guard's bilingual service homepage](https://livastic-vm2-primary-20260911.github.io/). No payment or customer results are claimed from this free app.
+
 ## License
 
 The code in this repository is MIT licensed. Third-party dependencies and model weights retain their own licenses.
