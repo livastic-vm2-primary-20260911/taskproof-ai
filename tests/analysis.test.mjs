@@ -22,6 +22,10 @@ test("competition is a risk not a payout guarantee",()=>{
  const x=analyzeBrief("Winner gets 500 USD. Judges choose the best project.");
  assert(x.risks.some(r=>r.id==="subjective"));
 });
+test("dollar-denominated entry fee is a critical upfront cost",()=>{
+ const result=analyzeBrief("To qualify for this task, pay a $20 entry fee to the platform.");
+ assert(result.risks.some(r=>r.id==="deposit" && r.severity==="critical"));
+});
 test("deposit demand is critical",()=>{
  assert(analyzeBrief("Pay entry fee to qualify for project").critical);
 });
