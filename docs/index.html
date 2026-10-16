@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#09131c">
+  <meta name="description" content="TaskProof: open-weight local AI that turns a paid gig or developer bounty brief into an evidence checklist, payment-risk questions, and transparent chance-weighted earnings estimate.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TaskProof — An AI preflight for gigs and bounties">
+  <meta property="og:description" content="Don't confuse a posted prize with a paycheck. Open-weight FLAN-T5, browser-only analysis and honest expected hourly math.">
+  <title>TaskProof — Check the work before chasing the prize</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="canonical" href="https://livastic-vm2-primary-20260911.github.io/taskproof-ai/">
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+<div class="ambient amb-a" aria-hidden="true"></div>
+<div class="ambient amb-b" aria-hidden="true"></div>
+<header class="top-nav wrap">
+  <a class="logo" href="#top" aria-label="TaskProof home"><span class="mark">T<span>•</span></span><span>TASK<span class="logo-light">PROOF</span></span></a>
+  <nav><a href="#try">Try it</a><a href="#how">Method</a><a href="https://github.com/livastic-vm2-primary-20260911/taskproof-ai" target="_blank" rel="noreferrer">Source <span aria-hidden="true">↗</span></a></nav>
+  <span class="edition">v0.1 / OPEN-WEIGHT</span>
+</header>
+<main id="top">
+  <section class="hero wrap">
+    <div class="pretitle"><span class="indicator"></span> FREE • NO SIGN-UP • YOUR BRIEF STAYS IN YOUR BROWSER</div>
+    <h1>Don't confuse a bounty<br>with a <em>paycheck.</em></h1>
+    <div class="hero-grid">
+      <p class="lead">Give a gig a fair shot before giving it your weekend. Turn a messy task brief into checkable evidence, unresolved payout questions, and a transparent hourly-value estimate—with local open-weight AI.</p>
+      <div class="hero-aside"><span class="aside-top">DECISION INTELLIGENCE</span><span class="aside-number">01<span> / 03</span></span><span class="aside-bottom">Read the ask → Price the risk → Plan the proof</span></div>
+    </div>
+    <div class="hero-links"><a class="btn primary" href="#try">Analyze a task brief <span>↗</span></a><a class="btn ghost" href="#how">See what is and isn't checked <span>→</span></a></div>
+    <div class="features"><span><b>◈</b> Open-weight FLAN-T5</span><span><b>▢</b> No API keys</span><span><b>⌁</b> Local inference</span><span><b>↗</b> Export proof plan</span></div>
+  </section>
+  <div class="sticker"><div class="wrap sticker-inside"><span>THE QUESTION</span><span>“Is the reward real, and what's the work?”</span><span>START WITH EVIDENCE, NOT HYPE.</span></div></div>
+  <section id="try" class="workbench wrap">
+    <div class="section-label">01 / THE WORKBENCH</div>
+    <div class="section-top"><h2>A 60-second preflight.<br><em>Zero imaginary revenue.</em></h2><p>Paste a publicly shareable brief or draft terms. Use a synthetic example to see how it works. Do not paste secrets, passwords, identities or proprietary source.</p></div>
+    <div class="bench-grid">
+      <div class="panel brief-panel">
+        <div class="panel-head"><span class="panel-name"><span class="tiny-indicator"></span> INPUT / BRIEF</span><span class="panel-cap">MAX 12,000 CHARS</span></div>
+        <label class="sr-only" for="brief">Description of the paid task</label>
+        <textarea id="brief" spellcheck="true" placeholder="Example: Build a small multiplayer game with a live demo, GitHub repo, tests and README. Only one winner receives the $500 prize. Deadline..."></textarea>
+        <div class="text-footer"><span id="char-count">0 / 12,000</span><span>Visible only in this tab</span></div>
+        <div class="preset-row"><button class="mini" id="example-contest" type="button">Load: competitive bounty</button><button class="mini" id="example-client" type="button">Load: fixed-fee client</button><button class="text-btn" id="clear" type="button">Clear</button></div>
+        <div class="action-row"><button class="btn primary" id="analyze" type="button">Inspect task <span>↗</span></button><button class="btn secondary" id="run-model" type="button">Run local AI review <span>✦</span></button></div>
+        <div class="privacy"><span class="dot"></span><div><strong>Your task text is not sent to an inference API.</strong> On first AI run, the browser downloads a public model and a local WebAssembly engine from the project's static assets/model host. AI may be slow or unavailable on some devices; deterministic checks work independently.</div></div>
+      </div>
+      <div class="panel report-panel">
+        <div class="panel-head"><span class="panel-name">OUTPUT / CHECK BEFORE ACCEPTING</span><span id="report-indicator" class="panel-cap">NOT STARTED</span></div>
+        <div id="empty-report" class="empty-report"><span class="empty-glyph">◎</span><h3>A listing isn't a receipt.</h3><p>Run the preflight to surface evidence requirements and questions that the brief doesn't answer. No scanner can verify escrow or guarantee payment from pasted prose.</p></div>
+        <div id="report" hidden>
+          <div class="risk-heading"><h3 id="risk-title">Draft evidence plan</h3><span class="pill neutral" id="risk-badge">REVIEW</span></div>
+          <p id="risk-summary" class="report-lead"></p>
+          <div class="report-subheading">Evidence the posting mentions</div><div id="evidence"></div>
+          <div class="report-subheading">Risk patterns, not verdicts</div><div id="risks"></div>
+          <div class="report-subheading">Questions to clarify before starting</div><div id="questions"></div>
+          <button type="button" id="export" class="btn report-download">Download local Markdown plan <span>↧</span></button>
+        </div>
+        <div class="ai-box">
+          <div class="ai-box-heading"><span><span class="ai-glyph">✦</span> OPEN-WEIGHT AI</span><span id="model-stage">NOT LOADED</span></div>
+          <div id="ai-idle" class="ai-idle">Run local AI to turn the task into a concise proof hypothesis, buyer question and bid opening line. Each suggestion needs human review.</div>
+          <div id="ai-progress" hidden><div class="loadingline"><div id="loading-fill"></div></div><p id="ai-status" role="status" aria-live="polite">Preparing…</p></div>
+          <div id="ai-result" hidden><div class="ai-field"><strong>MODEL'S EVIDENCE READ</strong><p id="ai-evidence"></p></div><div class="ai-field"><strong>ONE BUYER QUESTION</strong><p id="ai-question"></p></div><div class="ai-field"><strong>A DRAFT OPENING LINE</strong><p id="ai-opening"></p></div><small>This is a probabilistic model's text, not verified facts, a paid acceptance, or a promise of safety.</small></div>
+          <div id="ai-error" hidden role="alert" class="error"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="economics">
+    <div class="wrap">
+      <div class="section-label">02 / THE EXPECTED-VALUE DESK</div>
+      <div class="econ-head"><h2>The number worth<br><em>being skeptical of.</em></h2><p>No invented “win probability.” You enter the odds. We show the calculation, and we label every estimate as yours.</p></div>
+      <div class="economics-layout">
+        <div class="controls">
+          <div class="input-grid">
+            <label for="reward">Listed reward (USD)<input id="reward" type="number" min="0" max="1000000000" step="0.01" value="500" inputmode="decimal"></label>
+            <label for="fees">Platform fee (%)<input id="fees" type="number" min="0" max="100" step=".5" value="7.5" inputmode="decimal"></label>
+            <label for="hours">Your work estimate (hours)<input id="hours" type="number" min="0.1" max="5000" step=".5" value="8" inputmode="decimal"></label>
+            <label for="costs">Upfront spend (USD)<input id="costs" type="number" min="0" max="1000000000" step=".01" value="0" inputmode="decimal"></label>
+          </div>
+          <div class="probability"><div class="prob-label"><label for="chance">Your chance of being selected</label><strong id="chance-label">15%</strong></div><input id="chance" type="range" min="0" max="100" step="1" value="15"><div class="range-end"><span>0% no selection</span><span>100% certain selection</span></div></div>
+          <p class="controls-note">For a contest, 15% is only a demonstration assumption—not an estimate from entry data. For a contracted fixed-fee job, use your own evidence-backed payment probability instead.</p>
+        </div>
+        <div class="numbers">
+          <div class="number-top"><span>PROBABILITY-WEIGHTED NET / YOUR ASSUMPTIONS</span><strong id="ev">$0.00</strong><span id="ev-caption">Expected value, not money received</span></div>
+          <div class="number-grid"><div><span>Expected per work hour</span><strong id="hourly">$0.00</strong></div><div><span>Net if selected</span><strong id="selected">$0.00</strong></div><div><span>After platform fees</span><strong id="after-fee">$0.00</strong></div><div><span>Break-even win chance*</span><strong id="breakeven">0%</strong></div></div>
+          <p class="number-foot">*Break-even here only means covering direct spend, not your labor opportunity cost. All calculations ignore tax, exchange rates, uncertainty in selection criteria, delayed payouts and transaction risk.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="how" class="method wrap">
+    <div class="section-label">03 / THE METHOD</div><div class="method-head"><h2>Local by design.<br><em>Honest by default.</em></h2><p>Use what machines are good at—text-to-text summarization and consistent math. Keep payment and eligibility verification in human hands.</p></div>
+    <div class="method-grid">
+      <article><span class="method-num">01</span><h3>The text stays here.</h3><p>The brief is processed in JavaScript and a Web Worker. Model inference runs locally in your browser after downloading openly available weights. No account, form submission or hosted prompt API.</p></article>
+      <article><span class="method-num">02</span><h3>Math is fully visible.</h3><p>One honest formula: <code>(reward × (1 − fee) × your odds − costs) ÷ hours</code>. Never replace assumptions with “AI confidence” or call a posted bounty an actual receipt.</p></article>
+      <article><span class="method-num">03</span><h3>Proof is the deliverable.</h3><p>Checklists are generated from explicit phrases like “repo,” “video” or “test.” The open model adds a draft synthesis; you must verify it against actual task requirements.</p></article>
+    </div>
+    <div class="source-strip"><span><b>OPEN MODEL</b> Xenova/flan-t5-small (Apache-2.0)</span><span><b>ENGINE</b> Transformers.js / ONNX Runtime Web</span><span><b>CODE</b> MIT licensed</span></div>
+  </section>
+  <section class="cta"><div class="wrap cta-grid"><div><span class="section-label">BETA / SMALL, SPECIFIC SIDE HUSTLE</span><h2>Would you pay for a<br>more rigorous first pass?</h2><p>A possible $9/month personal review tool or a bespoke $19 one-off evidence briefing is a **pricing experiment**, not a subscription for sale today. No checkout, no promises, no affiliate links. A pilot buyer would need a separately agreed scope and terms.</p></div><div class="cta-actions"><a class="btn primary" href="https://github.com/livastic-vm2-primary-20260911/taskproof-ai/issues/new" target="_blank" rel="noopener noreferrer">Suggest a pilot use case <span>↗</span></a><a class="btn ghost" href="https://github.com/livastic-vm2-primary-20260911/taskproof-ai" target="_blank" rel="noopener noreferrer">Inspect the open source <span>→</span></a></div></div></section>
+</main>
+<footer class="footer wrap"><div class="footbrand"><span class="mark">T<span>•</span></span><span>TaskProof / 2026</span></div><p>A practical side-project by an AI-assisted agent. No verified paid users, no income guarantee, and no financial or legal advice. Never paste credentials or private customer documents.</p><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>
