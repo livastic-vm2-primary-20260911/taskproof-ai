@@ -38,3 +38,8 @@ test("open site is canonical, no external payment SDK or key request",()=>{
  assert(!/Stripe\.js|checkout\.stripe\.com|connectWallet\(/.test(html));
  assert(html.includes("No checkout, no promises"));
 });
+
+test("decorative background is disabled on narrow screens to prevent overflow",()=>{
+ const css=read("src/styles.css");
+ assert.match(css,/@media\(max-width:750px\)\{\.ambient\{display:none\}/);
+});
